@@ -39,5 +39,25 @@ class Produto(models.Model):
     destaque = models.BooleanField(default=False)
     stock = models.IntegerField(default=1)
 
+    def featured_image(self):
+        """Retorna a imagem marcada como destaque ou a primeira."""
+        return self.imagem.filter(em_destaque=True).first() or self.imagem.first()
+
     def __str__(self):
         return f"Nome: {self.titulo} - Preço: {self.preco} - Tamanho: {self.tamanho}"
+
+
+
+class ProdutoImagem(models.Model):
+    produto = models.ForeignKey(Produto, related_name='images', on_delete=models.CASCADE)
+    imagem = models.ImageField(upload_to='thumb_img')
+    em_destaque = models.BooleanField(default=False)
+
+    def save(self, *args, **kwargs):
+        """Garante que apenas uma imagem seja destacada por produto."""
+        if self.em_destaque:
+            ProdutoImagem.objects.filter(produto=self.produto).update(em_destaque=False)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"Imagen de {self.produto.titulo}"
