@@ -1,5 +1,5 @@
 
-{% extends 'auxiliares/base.html'%} {% load static %} {% block title %} Lojão Virtual | Homepage {% endblock%} {% block body %}
+{% extends 'auxiliares/base.html'%} {% load static %} {% block title %} Lojão Virtual | Homepage {% endblock%} {% block body %} {% load l10n %} {% load humanize %}
 
     <!-- Carousel Start -->
     <div class="container-fluid mb-3">
@@ -107,21 +107,20 @@
             {% for produto in produtos_destaque %}
             <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
                 <div class="product-item bg-light mb-4">
-                    <div class="product-img position-relative overflow-hidden" style="height: 300px !important;">
+                    <div class="product-img position-relative overflow-hidden" style="height: 250px !important;">
                         <img class="img-fluid w-100 h-100 object-fit-cover" src="{{ produto.imagem.url }}"
                             alt="{{ produto.titulo }}">
                         <div class="product-action">
                             <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
                             <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
                             <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
                         </div>
                     </div>
                     <div class="text-center py-4">
                         <a class="h6 text-decoration-none text-truncate d-block" style="max-width: 100% !important;"
-                            href="">{{ produto.titulo }}</a>
+                            href="{% url 'detalhes_produtos' produto.id %}">{{ produto.titulo }}</a>
                         <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>R${{ produto.preco }}</h5>
+                            <h5>R${{ produto.preco|intcomma }}</h5>
                             <h6 class="text-muted ml-2"></h6>
                         </div>
                     </div>

@@ -11,5 +11,12 @@ def homepage(request):
     context = {"produtos_recentes":produtos_recentes, "produtos_destaque":produtos_destaque}
     return render(request, 'index.html', context)
 
+def detalhes_produtos(request, id_produto):
+    produto = Produto.objects.get(id=id_produto)
+
+    context = {'produto':produto}
+    return render(request,'detalhes.html', context)
+
+
 def loja(request):
     return render(request, 'loja.html')
