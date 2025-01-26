@@ -39,13 +39,10 @@
             <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light"
                 id="navbar-vertical" style="width: calc(100% - 30px); z-index: 999;">
                 <div class="navbar-nav w-100">
-                    <a href="" class="nav-item nav-link">Roupas</a>
-                    <a href="" class="nav-item nav-link">Calçados</a>
-                    <a href="" class="nav-item nav-link">Celulares</a>
-                    <a href="" class="nav-item nav-link">Games</a>
-                    <a href="" class="nav-item nav-link">Livros</a>
-                    <a href="" class="nav-item nav-link">Informática</a>
-                    <a href="" class="nav-item nav-link">Móveis</a>
+                    {% for categoria in categorias %}
+                        <a href="{% url 'loja' categoria.nome %}" class="nav-item nav-link">{{ categoria.nome }}</a>
+                    {% endfor %}
+                    <!-- <a href="" class="nav-item nav-link">Roupas</a> -->
                 </div>
             </nav>
         </div>

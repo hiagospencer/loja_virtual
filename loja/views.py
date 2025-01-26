@@ -20,7 +20,7 @@ def detalhes_produtos(request, id_produto):
 
 
 def loja(request, nome_categoria=None):
-    produtos = Produto.objects.all().order_by('-data')[:15]
-
+    produtos = Produto.objects.filter(categoria__nome=nome_categoria).order_by('-data')[:15]
+    print(nome_categoria)
     context = {"produtos":produtos}
     return render(request, 'loja.html', context)
