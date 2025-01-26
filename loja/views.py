@@ -12,13 +12,15 @@ def homepage(request):
     return render(request, 'index.html', context)
 
 def detalhes_produtos(request, id_produto):
-    # produto = Produto.objects.get(id=id_produto)
+    todos_produtos = Produto.objects.all().order_by('-data')
     produto = get_object_or_404(Produto, id=id_produto)
 
-    print(produto)
-    context = {'produto':produto}
+    context = {'produto':produto, "todos_produtos":todos_produtos}
     return render(request,'detalhes.html', context)
 
 
-def loja(request):
-    return render(request, 'loja.html')
+def loja(request, nome_categoria=None):
+    produtos = Produto.objects.all().order_by('-data')[:15]
+
+    context = {"produtos":produtos}
+    return render(request, 'loja.html', context)
