@@ -61,3 +61,21 @@ class ProdutoImagem(models.Model):
 
     def __str__(self):
         return f"Imagen de {self.produto.titulo}"
+
+
+class Cor(models.Model):
+    nome = models.CharField(max_length=200, null=True, blank=True)
+    codigo =  models.CharField(max_length=200, null=True, blank=True)
+
+    def __str__(self):
+        return str(self.nome)
+
+
+class ItemEstoque(models.Model):
+    produto = models.ForeignKey(Produto, null=True, blank=True, on_delete=models.SET_NULL)
+    cor = models.ForeignKey(Cor, null=True, blank=True, on_delete=models.SET_NULL)
+    tamanho = models.CharField(max_length=200, null=True, blank=True)
+    quantidade = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.produto.titulo}, Tamanho: {self.tamanho}, Cor: {self.cor.nome} , Categoria: {self.produto.categoria}"
