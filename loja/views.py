@@ -1,4 +1,3 @@
-from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 
 from produto.models import *
@@ -17,7 +16,8 @@ def detalhes_produtos(request, id_produto, id_cor=None):
     tem_tamanho = False
     cores = {}
     tamanhos = {}
-    cor_selecionada = None
+    cor_selecionada = request.GET.get('cor_selecionada')
+    print(cor_selecionada)
     if id_cor:
         cor_selecionada = Cor.objects.get(id=id_cor)
     todos_produtos = Produto.objects.all().order_by('-data')

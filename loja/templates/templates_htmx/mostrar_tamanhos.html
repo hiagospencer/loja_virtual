@@ -1,0 +1,13 @@
+{% if tem_tamanho %}
+    {% if tamanhos %}
+        <strong class="text-dark mr-3">Tamanhos:</strong>
+        <form>
+            {% for tamanho in tamanhos %}
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" class="custom-control-input" id="size-1" name="size">
+                <label class="custom-control-label" for="size-1">{{ tamanho }}</label>
+            </div>
+            {% endfor %}
+        </form>
+    {% endif %}
+{% endif %}

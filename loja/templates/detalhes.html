@@ -66,7 +66,10 @@
                         {% for cor in cores %}
                         <div class="custom-control custom-radio custom-control-inline"
                             style="padding-left: 0; margin-right: 0.2rem; ">
-                            <a href="{% url 'detalhes_produtos' produto.id cor.id %}">
+                            <a style="cursor: pointer;"
+                            hx-get="{% url 'produto_htmx' produto.id cor.id %}"
+                            hx-target="#tamanhos"
+                            hx-trigger="click">
                                 <i class="fa-solid fa-circle" style="color: {{ cor.codigo }};"></i>
                             </a>
                         </div>
@@ -76,21 +79,9 @@
                 {% endif %}
 
 
-                <div class="d-flex mb-3">
-                    {% if tem_tamanho %}
-                        {% if tamanhos %}
-                        <strong class="text-dark mr-3">Tamanhos:</strong>
-                        <form>
-                            {% for tamanho in tamanhos %}
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="size-1" name="size">
-                                <label class="custom-control-label" for="size-1">{{ tamanho }}</label>
-                            </div>
-                            {% endfor %}
-                        </form>
-                        {% endif %}
-                    {% endif %}
-                </div>
+                    <div class="d-flex mb-3" id="tamanhos">
+                        {% include 'templates_htmx/mostrar_tamanhos.html' %}
+                    </div>
 
                 <div class="d-flex align-items-center mb-4 pt-2">
                     <div class="input-group quantity mr-3" style="width: 130px;">
