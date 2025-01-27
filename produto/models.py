@@ -77,5 +77,4 @@ class ItemEstoque(models.Model):
     tamanho = models.CharField(max_length=200, null=True, blank=True)
     quantidade = models.IntegerField(default=0)
 
-    def __str__(self):
-        return f"{self.produto.titulo}, Tamanho: {self.tamanho}, Cor: {self.cor.nome} , Categoria: {self.produto.categoria}"
+    
