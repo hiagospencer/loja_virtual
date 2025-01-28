@@ -27,35 +27,31 @@
             <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filtrar por
                     Preços</span></h5>
             <div class="bg-light p-4 mb-30">
-                <form>
+                <form hx-get="{% url 'filtrar_produtos' %}" hx-trigger="change from:form" hx-target="#produtos"
+                    hx-swap="innerHTML">
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" checked id="price-all">
-                        <label class="custom-control-label" for="price-all">All Price</label>
-                        <span class="badge border font-weight-normal">1000</span>
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="price-1">
-                        <label class="custom-control-label" for="price-1">$0 - $100</label>
+                        <input type="checkbox" class="custom-control-input" id="price-1" name="precos[]" value="1">
+                        <label class="custom-control-label" for="price-1">Até R$ 100</label>
                         <span class="badge border font-weight-normal">150</span>
                     </div>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="price-2">
-                        <label class="custom-control-label" for="price-2">$100 - $200</label>
+                        <input type="checkbox" class="custom-control-input" id="price-2" name="precos[]" value="2">
+                        <label class="custom-control-label" for="price-2">R$ 100 - R$ 300</label>
                         <span class="badge border font-weight-normal">295</span>
                     </div>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="price-3">
-                        <label class="custom-control-label" for="price-3">$200 - $300</label>
+                        <input type="checkbox" class="custom-control-input" id="price-3" name="precos[]" value="3">
+                        <label class="custom-control-label" for="price-3">R$ 300 - R$ 500</label>
                         <span class="badge border font-weight-normal">246</span>
                     </div>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="price-4">
-                        <label class="custom-control-label" for="price-4">$300 - $400</label>
+                        <input type="checkbox" class="custom-control-input" id="price-4" name="precos[]" value="4">
+                        <label class="custom-control-label" for="price-4">R$ 500 - R$ 1.000</label>
                         <span class="badge border font-weight-normal">145</span>
                     </div>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                        <input type="checkbox" class="custom-control-input" id="price-5">
-                        <label class="custom-control-label" for="price-5">$400 - $500</label>
+                        <input type="checkbox" class="custom-control-input" id="price-5" name="precos[]" value="5">
+                        <label class="custom-control-label" for="price-5">Acima de R$ 1.000</label>
                         <span class="badge border font-weight-normal">168</span>
                     </div>
                 </form>
@@ -69,7 +65,7 @@
                 <form>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                         <input type="checkbox" class="custom-control-input" checked id="size-all">
-                        <label class="custom-control-label" for="size-all">All Size</label>
+                        <label class="custom-control-label" for="size-all">Todos</label>
                         <span class="badge border font-weight-normal">1000</span>
                     </div>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
@@ -105,55 +101,8 @@
 
 
         <!-- Shop Product Start -->
-        <div class="col-lg-9 col-md-8">
-            <div class="row pb-3">
-
-                {% for produto in produtos %}
-                <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
-                    <div class="product-item bg-light mb-4">
-                        <div class="product-img position-relative overflow-hidden" style="height: 250px !important;">
-                            <img class="img-fluid w-100 h-100 object-fit-cover" src="{{ produto.imagem.url }}"
-                                alt="{{ produto.titulo }}">
-                            <div class="product-action">
-                                <a class="btn btn-outline-dark btn-square" href=""><i
-                                        class="fa fa-shopping-cart"></i></a>
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                            </div>
-                        </div>
-                        <div class="text-center py-4">
-                            <a class="h6 text-decoration-none text-truncate d-block"
-                            style="max-width: 100% !important;" href="{% url 'detalhes_produtos' produto.id %}">
-                            {{ produto.titulo }}</a>
-                            <div class="d-flex align-items-center justify-content-center mt-2">
-                                <h5>R${{ produto.preco|intcomma }}</h5>
-                            </div>
-                            <div class="d-flex align-items-center justify-content-center mb-1">
-                                <small class="fa fa-star text-primary mr-1"></small>
-                                <small class="fa fa-star text-primary mr-1"></small>
-                                <small class="fa fa-star text-primary mr-1"></small>
-                                <small class="fa fa-star text-primary mr-1"></small>
-                                <small class="fa fa-star text-primary mr-1"></small>
-                                <small>(99)</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-
-                <div class="col-12">
-                    <nav>
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item disabled"><a class="page-link" href="#">Previous</span></a></li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
+        <div class="col-lg-9 col-md-8" id="produtos">
+            {% include 'templates_htmx/loja_produtos_filtro.html' %}
         </div>
         <!-- Shop Product End -->
     </div>

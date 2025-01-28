@@ -1,0 +1,69 @@
+<div class="container mt-4">
+    <div class="row mt-4">
+        <div class="col-lg-12">
+            <!-- Navegação de paginação -->
+            <nav aria-label="Page navigation example" style="position: relative;">
+                <ul class="pagination justify-content-center">
+                    {% if produtos.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link"
+                            href="?page={{ produtos.previous_page_number }}&{{ filtros_selecionados }}">Anterior</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link">Anterior</span>
+                    </li>
+                    {% endif %}
+
+                    {% with total_pages=produtos.paginator.num_pages %}
+                    {% if total_pages <= 7 %} <!-- Exibir todas as páginas se forem 7 ou menos -->
+                        {% for i in produtos.paginator.page_range %}
+                        <li class="page-item {% if produtos.number == i %}active{% endif %}">
+                            <a class="page-link" href="?page={{ i }}&{{ filtros_selecionados }}">{{ i }}</a>
+                        </li>
+                        {% endfor %}
+                        {% else %}
+                        <!-- Lógica para exibir apenas 7 páginas -->
+                        {% if produtos.number > 4 %}
+                        <li class="page-item"><a class="page-link"
+                                href="?page=1&{{ filtros_selecionados }}">1</a></li>
+                        {% if produtos.number > 5 %}
+                        <li class="page-item disabled"><span class="page-link">...</span></li>
+                        {% endif %}
+                        {% endif %}
+
+                        {% for i in produtos.paginator.page_range %}
+                        {% if i >= produtos.number|add:'-3' and i <= produtos.number|add:'3' %} <li
+                            class="page-item {% if produtos.number == i %}active{% endif %}">
+                            <a class="page-link" href="?page={{ i }}&{{ filtros_selecionados }}">{{ i }}</a>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+
+                            {% if produtos.number < total_pages|add:'-3' %} {% if produtos.number < total_pages|add:'-4' %}
+                                <li class="page-item disabled"><span class="page-link">...</span></li>
+                                {% endif %}
+                                <li class="page-item"><a class="page-link"
+                                        href="?page={{ total_pages }}&{{ filtros_selecionados }}">
+                                        {{ total_pages }}</a>
+                                </li>
+                                {% endif %}
+                                {% endif %}
+                                {% endwith %}
+
+                                {% if produtos.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link"
+                                        href="?page={{ produtos.next_page_number }}&{{ filtros_selecionados }}">Próxima</a>
+                                </li>
+                                {% else %}
+                                <li class="page-item disabled">
+                                    <span class="page-link">Próxima</span>
+                                </li>
+                                {% endif %}
+                </ul>
+            </nav>
+            <p class="text-center">Página {{ produtos.number }} de {{ produtos.paginator.num_pages }}</p>
+        </div>
+    </div>
+</div>

@@ -1,3 +1,24 @@
+{% if tem_cor %}
+    <div class="d-flex mb-4">
+    {% if cor_selecionada %}
+    <strong class="text-dark mr-3">Cor selecionada: {{ cor_selecionada.nome }}</strong>
+    {% else %}
+    <strong class="text-dark mr-3">Cor:</strong>
+    {% endif %}
+    <form>
+        {% for cor in cores %}
+        <div class="custom-control custom-radio custom-control-inline" style="padding-left: 0; margin-right: 0.2rem; ">
+            <a style="cursor: pointer;" hx-get="{% url 'produto_htmx' produto.id cor.id %}" hx-target="#tamanhos"
+                hx-trigger="click">
+                <i class="fa-solid fa-circle" style="color: {{ cor.codigo }};"></i>
+            </a>
+        </div>
+        {% endfor %}
+    </form>
+    </div>
+{% endif %}
+
+<div class="d-flex mb-3" >
 {% if tem_tamanho %}
     {% if tamanhos %}
         <strong class="text-dark mr-3">Tamanhos:</strong>
@@ -11,3 +32,4 @@
         </form>
     {% endif %}
 {% endif %}
+</div>
