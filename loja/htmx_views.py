@@ -1,5 +1,7 @@
 import operator
 from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponse, JsonResponse
+from django.template.loader import render_to_string
 from django.core.paginator import Paginator
 from django.db.models import Q
 from functools import reduce
@@ -34,33 +36,3 @@ def produto_htmx(request, id_produto, id_cor=None):
         'produto':produto, "todos_produtos":todos_produtos, "item_estoque":item_estoque, "tem_estoque":tem_estoque, "cores":cores, "tamanhos": tamanhos, "cor_selecionada": cor_selecionada, "tem_cor":tem_cor,"tem_tamanho":tem_tamanho
         }
     return render(request, 'templates_htmx/mostrar_tamanhos.html', context)
-
-
-def filtrar_produtos(request):
-    precos = request.GET.getlist('precos[]')
-    produtos = Produto.objects.all()
-
-    # Aplicar filtros de preço
-    if precos:
-        queries = []
-        for preco in precos:
-            if preco == "1":
-                queries.append(Q(preco__lte=100))
-            elif preco == "2":
-                queries.append(Q(preco__gt=100, preco__lte=300))
-            elif preco == "3":
-                queries.append(Q(preco__gt=300, preco__lte=500))
-            elif preco == "4":
-                queries.append(Q(preco__gt=500, preco__lte=1000))
-            elif preco == "5":
-                queries.append(Q(preco__gt=1000))
-        produtos = produtos.filter(reduce(operator.or_, queries)).order_by('-preco')
-
-
-    paginator = Paginator(produtos, 2)  # Exibir 5 produtos por página
-    page_number = request.GET.get('page', 1)
-    produtos_paginados = paginator.get_page(page_number)
-
-    # Renderiza somente os produtos filtrados
-    context = {'produtos': produtos_paginados, 'precos_selecionados': precos}
-    return render(request, 'templates_htmx/loja_produtos_filtro.html', context)

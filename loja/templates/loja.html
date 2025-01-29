@@ -21,91 +21,90 @@
 <!-- Shop Start -->
 <div class="container-fluid">
     <div class="row px-xl-5">
-        <!-- Shop Sidebar Start -->
+        <!-- Shop Sidebar Start preços -->
         <div class="col-lg-3 col-md-4">
             <!-- Price Start -->
             <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filtrar por
                     Preços</span></h5>
             <div class="bg-light p-4 mb-30">
-                <form hx-get="{% url 'filtrar_produtos' %}" hx-trigger="change from:form" hx-target="#produtos"
-                    hx-swap="innerHTML">
+                <form method="GET" action="{% if nome_categoria %}{% url 'loja' nome_categoria=nome_categoria %}{% else %}{% url 'loja' %}{% endif %}">
+
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="price-1" name="precos[]" value="1">
+                        <input type="checkbox" class="custom-control-input" id="price-1" name="precos" value="1" {% if '1' in precos %}checked{% endif %}>
                         <label class="custom-control-label" for="price-1">Até R$ 100</label>
-                        <span class="badge border font-weight-normal">150</span>
                     </div>
+
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="price-2" name="precos[]" value="2">
+                        <input type="checkbox" class="custom-control-input" id="price-2" name="precos" value="2" {% if '2' in precos %}checked{% endif %}>
                         <label class="custom-control-label" for="price-2">R$ 100 - R$ 300</label>
-                        <span class="badge border font-weight-normal">295</span>
                     </div>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="price-3" name="precos[]" value="3">
+                        <input type="checkbox" class="custom-control-input" id="price-3" name="precos" value="3" {% if '3' in precos %}checked{% endif %}>
                         <label class="custom-control-label" for="price-3">R$ 300 - R$ 500</label>
-                        <span class="badge border font-weight-normal">246</span>
                     </div>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="price-4" name="precos[]" value="4">
+                        <input type="checkbox" class="custom-control-input" id="price-4" name="precos" value="4" {% if '4' in precos %}checked{% endif %}>
                         <label class="custom-control-label" for="price-4">R$ 500 - R$ 1.000</label>
-                        <span class="badge border font-weight-normal">145</span>
                     </div>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                        <input type="checkbox" class="custom-control-input" id="price-5" name="precos[]" value="5">
+                        <input type="checkbox" class="custom-control-input" id="price-5" name="precos" value="5" {% if '5' in precos %}checked{% endif %}>
                         <label class="custom-control-label" for="price-5">Acima de R$ 1.000</label>
-                        <span class="badge border font-weight-normal">168</span>
+                    </div>
+                    <div class="mt-4">
+                        <button type="submit" class="btn btn-primary">Filtrar</button>
+                        <a href="{% if nome_categoria %}{% url 'loja' nome_categoria=nome_categoria %}{% else %}{% url 'loja' %}{% endif %}">
+                        <button type="button" class="btn btn-outline-primary">Resetar Filtros</button>
                     </div>
                 </form>
+
             </div>
             <!-- Price End -->
-
-            <!-- Size Start -->
-            <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filtrar por
-                    Tamanhos</span></h5>
-            <div class="bg-light p-4 mb-30">
-                <form>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" checked id="size-all">
-                        <label class="custom-control-label" for="size-all">Todos</label>
-                        <span class="badge border font-weight-normal">1000</span>
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="size-1">
-                        <label class="custom-control-label" for="size-1">PP</label>
-                        <span class="badge border font-weight-normal">150</span>
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="size-2">
-                        <label class="custom-control-label" for="size-2">P</label>
-                        <span class="badge border font-weight-normal">295</span>
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="size-3">
-                        <label class="custom-control-label" for="size-3">M</label>
-                        <span class="badge border font-weight-normal">246</span>
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="size-4">
-                        <label class="custom-control-label" for="size-4">G</label>
-                        <span class="badge border font-weight-normal">145</span>
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                        <input type="checkbox" class="custom-control-input" id="size-5">
-                        <label class="custom-control-label" for="size-5">GG</label>
-                        <span class="badge border font-weight-normal">168</span>
-                    </div>
-                </form>
-            </div>
-            <!-- Size End -->
         </div>
-        <!-- Shop Sidebar End -->
+        <!-- Shop Sidebar End preços -->
 
 
         <!-- Shop Product Start -->
-        <div class="col-lg-9 col-md-8" id="produtos">
-            {% include 'templates_htmx/loja_produtos_filtro.html' %}
+        <div class="col-lg-9 col-md-8" id="produtos-container">
+            <div class="row pb-3">
+                {% for produto in produtos %}
+                <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
+                    <div class="product-item bg-light mb-4">
+                        <div class="product-img position-relative overflow-hidden" style="height: 250px !important;">
+                            <img class="img-fluid w-100 h-100 object-fit-cover" src="{{ produto.imagem.url }}"
+                                alt="{{ produto.titulo }}">
+                            <div class="product-action">
+                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
+                                <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
+                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+                            </div>
+                        </div>
+                        <div class="text-center py-4">
+                            <a class="h6 text-decoration-none text-truncate d-block"
+                            style="max-width: 100% !important; padding: 0 5%;"
+                                href="{% url 'detalhes_produtos' produto.id %}">
+                                {{ produto.titulo }}</a>
+                            <div class="d-flex align-items-center justify-content-center mt-2">
+                                <h5>R${{ produto.preco|intcomma }}</h5>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center mb-1">
+                                <small class="fa fa-star text-primary mr-1"></small>
+                                <small class="fa fa-star text-primary mr-1"></small>
+                                <small class="fa fa-star text-primary mr-1"></small>
+                                <small class="fa fa-star text-primary mr-1"></small>
+                                <small class="fa fa-star text-primary mr-1"></small>
+                                <small>(99)</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
         </div>
         <!-- Shop Product End -->
+
+        {% include 'auxiliares/pagination.html' %}
     </div>
 </div>
 <!-- Shop End -->
+
 {% endblock %}

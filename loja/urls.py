@@ -12,8 +12,7 @@ urlpatterns = [
 
 
 htmx_urlpatterns = [
-     path('detalhes/<int:id_produto>/<int:id_cor>/', produto_htmx, name='produto_htmx'),
-      path('filtrar-produtos/', filtrar_produtos, name='filtrar_produtos'),
+    path('detalhes/<int:id_produto>/<int:id_cor>/', produto_htmx, name='produto_htmx'),
 ]
 
 urlpatterns += htmx_urlpatterns
