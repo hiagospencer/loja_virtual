@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     #apps
     'loja',
     'produto',
+    'carrinho',
 ]
 
 MIDDLEWARE = [
@@ -69,6 +70,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'loja.context_categorias.categorias_disponiveis',
+                'carrinho.novos_context.carrinho',
             ],
         },
     },

@@ -1,7 +1,7 @@
 {% if tem_cor %}
-    <div class="d-flex mb-4">
+<div class="d-flex mb-4">
     {% if cor_selecionada %}
-    <strong class="text-dark mr-3">Cor selecionada: {{ cor_selecionada.nome }}</strong>
+    <strong class="text-dark mr-3">Cor: {{ cor_selecionada.nome }}</strong>
     {% else %}
     <strong class="text-dark mr-3">Cor:</strong>
     {% endif %}
@@ -15,21 +15,38 @@
         </div>
         {% endfor %}
     </form>
-    </div>
+</div>
+{% else %}
 {% endif %}
 
-<div class="d-flex mb-3" >
-{% if tem_tamanho %}
+<div class="d-flex mb-3">
+    {% if tem_tamanho %}
     {% if tamanhos %}
-        <strong class="text-dark mr-3">Tamanhos:</strong>
-        <form>
-            {% for tamanho in tamanhos %}
-            <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" class="custom-control-input" id="size-1" name="size">
-                <label class="custom-control-label" for="size-1">{{ tamanho }}</label>
-            </div>
-            {% endfor %}
-        </form>
+    <strong class="text-dark mr-3">Tamanhos:</strong>
+    <form method="POST" action="{% url 'adicionar_carrinho' produto.id %}">
+        {% csrf_token %}
+        {% for tamanho in tamanhos %}
+        <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" id="{{ tamanho }}" name="tamanho" value="{{ tamanho }}"
+                required>
+            <label class="custom-control-label" for="{{ tamanho }}">{{ tamanho }}</label>
+        </div>
+        {% endfor %}
+        <div  class="d-flex align-items-center mb-4 pt-2">
+            <input type="hidden" name="cor" value="{{ cor_selecionada.id}}">
+            <button class="btn btn-primary px-3" type="submit"><i class="fa fa-shopping-cart mr-1"></i>add carinho</button>
+        </div>
+    </form>
     {% endif %}
-{% endif %}
+    {% endif %}
+
+    {% if not produto.cor and not produto.tamanho or produto.cor and not produto.tamanho %}
+    <form method="POST" action="{% url 'adicionar_carrinho' produto.id %}">
+        {% csrf_token %}
+        <div class="d-flex align-items-center mb-4 pt-2">
+            <input type="hidden" name="cor" value="{{ cor_selecionada.id}}">
+            <button class="btn btn-primary px-3" type="submit"><i class="fa fa-shopping-cart mr-1"></i>add carinho</button>
+        </div>
+    </form>
+    {% endif %}
 </div>

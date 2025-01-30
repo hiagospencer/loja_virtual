@@ -33,8 +33,6 @@ def detalhes_produtos(request, id_produto, id_cor=None):
 
 
 def loja(request, nome_categoria=None):
-    if request.method == "post":
-        nome_pesquisa = request.GET.post('nome_pesquisa')
     produtos = Produto.objects.all()
     if nome_categoria:
         produtos = produtos.filter(categoria__nome=nome_categoria)
