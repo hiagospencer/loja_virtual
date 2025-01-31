@@ -1,5 +1,7 @@
 from django.db import models
 
+from carrinho.models import Pedido
+
 
 LISTA_CATEGORIA = (
     ('roupas_masculinas', 'Roupas Masculinas'),
@@ -77,4 +79,14 @@ class ItemEstoque(models.Model):
     tamanho = models.CharField(max_length=200, null=True, blank=True)
     quantidade = models.IntegerField(default=0)
 
-    
+    def __str__(self):
+        return f"Nome: {self.produto.titulo}"
+
+
+class ItensPedido(models.Model):
+    item_estoque = models.ForeignKey(ItemEstoque, null=True, blank=True, on_delete=models.SET_NULL)
+    quantidade = models.IntegerField(default=0)
+    pedido = models.ForeignKey(Pedido, null=True, blank=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'Nome: {self.item_estoque.produto.titulo}, Cor: {self.item_estoque.cor.nome}, Tamanho: {self.item_estoque.tamanho}, Quantidade: {self.quantidade}'

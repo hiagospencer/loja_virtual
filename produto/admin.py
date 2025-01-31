@@ -19,3 +19,4 @@ class ItemEstoqueAdmin(admin.ModelAdmin):
 
 admin.site.register(Categoria)
 admin.site.register(Cor)
+admin.site.register(ItensPedido)
