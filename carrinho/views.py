@@ -3,12 +3,15 @@ from django.shortcuts import render, redirect
 from .models import Pedido
 from produto.models import ItensPedido
 
+from .utilidades import preco_total
+
 def carrinho(request):
     if request.user.is_authenticated:
         cliente = request.user.cliente
-    pedido, criado = Pedido.objects.get_or_create(cliente=cliente, finalizado=False) #verificando se existe pedido, se não tiver vai criar um pedido vazio, e retornar duas informações
+    pedido, criado = Pedido.objects.get_or_create(cliente=cliente, finalizado=False)
     itens_pedido = ItensPedido.objects.filter(pedido=pedido)
-    context = {"itens_pedido":itens_pedido, "pedido":pedido}
+    preco_total_pedido = preco_total(pedido)
+    context = {"itens_pedido":itens_pedido, "pedido":pedido, "preco_total_pedido":preco_total_pedido}
     return render(request, 'carrinho.html', context)
 
 def adicionar_carrinho(request, id_carrinho):
