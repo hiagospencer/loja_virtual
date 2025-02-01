@@ -89,4 +89,8 @@ class ItensPedido(models.Model):
     pedido = models.ForeignKey(Pedido, null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'Nome: {self.item_estoque.produto.titulo}, Cor: {self.item_estoque.cor.nome}, Tamanho: {self.item_estoque.tamanho}, Quantidade: {self.quantidade}'
+        return f'Nome: {self.item_estoque.produto.titulo}, Quantidade: {self.quantidade}'
+
+    @property
+    def preco_total(self):
+        return self.quantidade * self.item_estoque.produto.preco
